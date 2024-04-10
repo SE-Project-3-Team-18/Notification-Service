@@ -1,0 +1,52 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: Email Service API
+  description: API for sending emails
+host: localhost:5000
+basePath: /api
+schemes:
+  - http
+paths:
+  /send-email:
+    post:
+      summary: Send Email
+      description: Send an email to the specified recipient
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: emailData
+          description: Email details
+          required: true
+          schema:
+            type: object
+            properties:
+              emailTo:
+                type: string
+                format: email
+                description: Email address of the recipient
+              emailSubject:
+                type: string
+                description: Subject of the email
+              emailBody:
+                type: string
+                description: Body content of the email
+      responses:
+        200:
+          description: Email sent successfully
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: Indicates whether the email was sent successfully
+              message:
+                type: string
+                description: Success message
+        400:
+          description: Invalid request body
+        500:
+          description: Internal server error
