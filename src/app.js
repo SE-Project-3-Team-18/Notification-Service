@@ -10,6 +10,7 @@ const CustomLogger = require('./utils/logger')
 const { errorHandler, CustomError } = require('./utils/error')
 const ServiceRegistryClient = require('./utils/serviceRegistry')
 const EmailService = require('./utils/emailService')
+const sendEmail = require('./controllers/sendEmail')
 
 const mongoUrl = config.MONGODB_URI
 const connection = mongoose.connection
@@ -57,32 +58,7 @@ app.get('/api', async (req, res, next) => {
   }
 })
 
-app.post('/api/send-email', async (req, res, next) => {
-  try {
-    const {
-      emailTo,
-      emailSubject,
-      emailBody,
-    } = req.body
-    await EmailService
-      .getInstance()
-      .sendEmail(emailTo, emailSubject, emailBody)
-    return res
-      .status(200)
-      .json({
-        success: true,
-        message: 'email sent successfully',
-      })
-  } catch (e) {
-    let error = null
-    if (e instanceof CustomError) {
-      error = e
-    } else {
-      error = new CustomError(`Error sending email: ${e.message}`, 500, true)
-    }
-    next(error)
-  }
-})
+app.post('/api/send-email', sendEmail)
 
 app.use('/api', errorHandler)
 
