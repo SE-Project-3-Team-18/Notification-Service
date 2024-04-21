@@ -50,3 +50,44 @@ paths:
           description: Invalid request body
         500:
           description: Internal server error
+  /send-email-by-id:
+    post:
+      summary: Send an email
+      description: Sends an email to the specified user by userId
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Email details
+          required: true
+          schema:
+            type: object
+            properties:
+              userId:
+                type: string
+                description: ID of the user to send the email to
+              subject:
+                type: string
+                description: Subject of the email
+              body:
+                type: string
+                description: Body of the email
+      responses:
+        200:
+          description: Email sent successfully
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: Indicates if the email was sent successfully
+              message:
+                type: string
+                description: Message indicating the status of the email sending process
+        400:
+          description: Bad request
+        500:
+          description: Internal server error

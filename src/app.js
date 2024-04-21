@@ -7,10 +7,11 @@ const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
 const CustomLogger = require('./utils/logger')
-const { errorHandler, CustomError } = require('./utils/error')
+const { errorHandler } = require('./utils/error')
 const ServiceRegistryClient = require('./utils/serviceRegistry')
 const EmailService = require('./utils/emailService')
 const sendEmail = require('./controllers/sendEmail')
+const sendEmailById = require('./controllers/sendEmailById')
 
 const mongoUrl = config.MONGODB_URI
 const connection = mongoose.connection
@@ -59,6 +60,7 @@ app.get('/api', async (req, res, next) => {
 })
 
 app.post('/api/send-email', sendEmail)
+app.post('/api/send-email-by-id', sendEmailById)
 
 app.use('/api', errorHandler)
 
