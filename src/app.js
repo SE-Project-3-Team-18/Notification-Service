@@ -12,6 +12,9 @@ const ServiceRegistryClient = require('./utils/serviceRegistry')
 const EmailService = require('./utils/emailService')
 const sendEmail = require('./controllers/sendEmail')
 const sendEmailById = require('./controllers/sendEmailById')
+const sendNotification = require('./controllers/sendNotification')
+const getNotifications = require('./controllers/getNotifications')
+const readNotifications = require('./controllers/readNotification')
 
 const mongoUrl = config.MONGODB_URI
 const connection = mongoose.connection
@@ -61,6 +64,9 @@ app.get('/api', async (req, res, next) => {
 
 app.post('/api/send-email', sendEmail)
 app.post('/api/send-email-by-id', sendEmailById)
+app.post('/api/send-notification', sendNotification)
+app.get('/api/get-notifications', getNotifications)
+app.post('/api/read-notification', readNotifications)
 
 app.use('/api', errorHandler)
 
